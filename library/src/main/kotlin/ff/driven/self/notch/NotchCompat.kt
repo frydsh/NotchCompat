@@ -45,6 +45,30 @@ object NotchCompat {
         return mNotchScreenSupport!!.getNotchSizeHardware(window)
     }
 
+    fun getNotchHeight(window: Window): Int {
+        checkScreenSupportInit()
+        val rects = mNotchScreenSupport!!.getNotchSize(window)
+        var height = 0
+        for (rect in rects) {
+            if (rect.height() > height) {
+                height = rect.height()
+            }
+        }
+        return height
+    }
+
+    fun getNotchHeightHardware(window: Window): Int {
+        checkScreenSupportInit()
+        val rects = mNotchScreenSupport!!.getNotchSizeHardware(window)
+        var height = 0
+        for (rect in rects) {
+            if (rect.height() > height) {
+                height = rect.height()
+            }
+        }
+        return height
+    }
+
     /**
      * 设置始终使用凹口屏区域
      */
