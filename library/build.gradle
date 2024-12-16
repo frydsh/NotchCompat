@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 28
@@ -36,4 +37,27 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+
+        }
+        repositories {
+            maven {
+                name = 'local'
+                url = layout.buildDirectory.dir("repo")
+            }
+        }
+    }
+    android.libraryVariants.each { variant ->
+        if (variant.buildType.name != "release") { return }
+        publishing.publications.create(variant.name, MavenPublication) {
+            from components.findByName(variant.name)
+            groupId 'ff.driven.self.notch'
+            artifactId project.name
+            version "1.0"
+        }
+    }
 }
