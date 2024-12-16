@@ -41,9 +41,6 @@ dependencies {
 
 afterEvaluate {
     publishing {
-        publications {
-
-        }
         repositories {
             maven {
                 name = 'local'
